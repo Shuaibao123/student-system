@@ -1,3 +1,4 @@
+package src;
 
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -9,14 +10,13 @@ import java.sql.SQLException;
  */
 public class JDBCManager {
     private static Connection conn = null;
-    private static  String dbUrl = "jdbc:derby:"+ Paths.get(System.getProperty("user.dir"),"database").toString() +";create=true";
+    private static String dbUrl = "jdbc:derby:" + Paths.get(System.getProperty("user.dir"), "database").toString() + ";create=true";
     private static String username = "root";
-    private static  String password = "root";
-
+    private static String password = "root";
 
     static {
         try {
-            //Load Driver
+            // Load the driver
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -24,7 +24,8 @@ public class JDBCManager {
     }
 
     /**
-     * Get Connection
+     * Get a connection
+     *
      * @return
      */
     public static Connection getConn() {

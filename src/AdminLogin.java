@@ -1,3 +1,4 @@
+package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,20 +9,19 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 
-
 /*
  * Login Window
  */
 @SuppressWarnings("serial")
 public class AdminLogin extends JFrame {
     private JPanel contentPanel = new JPanel();
-    // Label labels store background images
+    // Label component to store the background image
     private JLabel label;
-    // Set button components
-    private JButton login = new JButton("LOG IN");
-    private JButton cancel = new JButton("CANCEL");
-    private JLabel jlb1 = new JLabel("USERNAME:"), jlb2 = new JLabel("DODE:"), jlbtitle = new JLabel("Login interface");
-    // Set Text Box Component
+    // Setting up buttons
+    private JButton login = new JButton("Login");
+    private JButton cancel = new JButton("Cancel");
+    private JLabel jlb1 = new JLabel("Username:"), jlb2 = new JLabel("Password:"), jlbtitle = new JLabel("Login Page");
+    // Setting up text fields
     private JTextField admin = new JTextField();
     JPasswordField password = new JPasswordField();
 
@@ -31,18 +31,18 @@ public class AdminLogin extends JFrame {
     }
 
     private void init() {
-        this.setTitle("Administrator login interface");
+        this.setTitle("Administrator Login Page");
         this.setSize(500, 350);
         this.setIconImage(Main.WINDOWS_ICON);
         label = new JLabel(new ImageIcon("image\\aa.jpeg"));
         label.setBounds(0, 0, 1000, 400);
-        // Add two labels with images on the bottom layer of Layered Panel, and label 2 is above label
+        // Adding two image labels on the LayeredPane, with label2 on top of label1
         this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
-        // Set the content panel to transparent and you can see the background added to the Layered Panel.
+        // Setting the content panel to be transparent to display the background added to LayeredPane.
         ((JPanel) this.getContentPane()).setOpaque(false);
 
         /*
-         * Add components to the contentPanel container with a free layout.
+         * Adding components to the contentPanel container with a free layout.
          */
         contentPanel.setLayout(null);
         add(admin);
@@ -54,7 +54,7 @@ public class AdminLogin extends JFrame {
         add(jlbtitle);
 
         /*
-         * Absolute position of components
+         * Absolute positioning of components
          */
         jlb1.setBounds(50, 130, 80, 25);
         jlb1.setForeground(Color.black);
@@ -75,7 +75,7 @@ public class AdminLogin extends JFrame {
         jlbtitle.setForeground(Color.BLUE);
 
         /*
-         * Component transparency
+         * Making components transparent
          */
         admin.setOpaque(true);
         password.setOpaque(true);
@@ -83,7 +83,7 @@ public class AdminLogin extends JFrame {
         getContentPane().add(contentPanel);
 
         /*
-         * Component Border Color
+         * Setting component border colors
          */
         textSet(admin);
         textSet(password);
@@ -92,7 +92,7 @@ public class AdminLogin extends JFrame {
     }
 
     /*
-     * JTextField text box setting method
+     * Method to set JTextField text fields.
      */
     private void textSet(JTextField field) {
         field.setBackground(new Color(255, 255, 255));
@@ -102,7 +102,7 @@ public class AdminLogin extends JFrame {
     }
 
     /*
-     * event listeners
+     * Event listeners
      */
     private void addListener() {
         login.addActionListener(new ActionListener() {
@@ -125,11 +125,17 @@ public class AdminLogin extends JFrame {
 
     // Login method
     public void forLogin(String admin, String pwd) {
-        if ("root".equals(admin) && "123456".equals(pwd)){
-            MyJFrame mf = new MyJFrame();
-            mf.show();
-            this.dispose();
+        if (!"root".equals(admin)) {
+            GUIUtil.dialog(this, "Incorrect username");
+            return;
         }
+        if (!"123456".equals(pwd)) {
+            GUIUtil.dialog(this, "Incorrect password");
+            return;
+        }
+        MyJFrame mf = new MyJFrame();
+        mf.show();
+        this.dispose();
     }
 
 }
