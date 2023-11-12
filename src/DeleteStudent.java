@@ -1,4 +1,4 @@
-// Delete Interface Class
+package src;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,43 +8,45 @@ import java.sql.*;
 
 class DeleteStudent extends JDialog implements ActionListener {
 
-    // Set to two buttons: confirm and cancel
+    // Set up two buttons for confirmation and cancellation
     JButton[] button = new JButton[2];
     JPanel jp;
     JTable jt;
     JScrollPane jsp = null;
-    // Set as a deleted form
+    // Set up a form for deletion
     MyJTable mytable;
-    // Several commonly used variable types in SQL
+    // Common SQL variables
 
     Connection ct = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     private String name;
+    private MyJFrame father;
 
-    public DeleteStudent(Frame ower, String name, boolean Model) {
+    public DeleteStudent(Frame father, String name, boolean modal) {
+        this.father = (MyJFrame) father;
 
-        super(ower, Model);
         this.setName(name);
         jp = new JPanel();
-        button[0] = new JButton("YES");
+        button[0] = new JButton("OK");
         button[0].addActionListener(this);
-        button[1] = new JButton("NO");
+        button[1] = new JButton("Cancel");
         button[1].addActionListener(this);
         jp.add(button[0]);
         jp.add(button[1]);
 
-        // Set up an interface for my list
+        // Set up a table for displaying data
         mytable = new MyJTable(name);
         jt = new JTable(mytable);
         JScrollPane jsp = new JScrollPane(jt);
         this.add(jp, BorderLayout.SOUTH);
         this.add(jsp, BorderLayout.NORTH);
-        this.setTitle("Delete interface");
+        this.setTitle("Delete Interface");
         this.setSize(800, 500);
         this.setResizable(false);
         this.setVisible(true);
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
+
     }
 
     public String getName() {
@@ -57,37 +59,14 @@ class DeleteStudent extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         if (e.getSource() == button[0]) {
+            int i = StudentJDBC.getInstance().delete(this.getName().trim());
 
-            try {
-                // Load jdbc_ Odbc driver
-                
-                ct = JDBCManager.getConn();
-                String sql = new String("delete  from student where Stuname=?");
-                ps = ct.prepareStatement(sql);
-                ps.setString(1, this.getName().trim());
-
-                int i = ps.executeUpdate();
-                if (1 == i)
-                    JOptionPane.showMessageDialog(this, "Successfully deleted");
-                else
-                    JOptionPane.showMessageDialog(this, "Deletion failed！");
-
-            } catch ( SQLException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } finally {
-                try {
-                    if (ps != null)
-                        ps.close();
-                    if (ct != null)
-                        ct.close();
-                } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
+            if (1 == i)
+                JOptionPane.showMessageDialog(this, "Deletion Successful");
+            else
+                JOptionPane.showMessageDialog(this, "Deletion Failed!");
+            father.refresh();
         }
 
         this.dispose();

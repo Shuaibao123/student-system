@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
@@ -13,7 +15,7 @@ public class Main {
 
     static {
         try {
-            //Load Driver
+            // Load the driver
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             Connection conn = JDBCManager.getConn();
             Statement stmt = conn.createStatement();
@@ -30,7 +32,7 @@ public class Main {
                                 "StuAge varchar(100)," +
                                 "StuJg varchar(100)," +
                                 "StuDept varchar(100)" +
-                        ")";
+                                ")";
                 stmt.executeUpdate(sql);
             }
         } catch (Exception e) {
@@ -42,12 +44,9 @@ public class Main {
         // Create a panel object
 //        MyJFrame mf = new MyJFrame();
 //        mf.show();
-        AdminLogin adminLogin = new AdminLogin();
-        adminLogin.show();
-//        MyJFrame mf = new MyJFrame();
-//        mf.show();
-
-
+//          AdminLogin adminLogin = new AdminLogin();
+//          adminLogin.show();
+        MyJFrame mf = new MyJFrame();
+        mf.show();
     }
-
 }
