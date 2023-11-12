@@ -44,7 +44,7 @@ class DeleteStudent extends JDialog implements ActionListener {
         this.setSize(800, 500);
         this.setResizable(false);
         this.setVisible(true);
-
+        setLocationRelativeTo(null);
     }
 
     public String getName() {
@@ -62,8 +62,8 @@ class DeleteStudent extends JDialog implements ActionListener {
 
             try {
                 // Load jdbc_ Odbc driver
-                String driver = "jdbc:derby://localhost:1527/student;create=true;";
-                ct = DriverManager.getConnection(driver);
+                
+                ct = JDBCManager.getConn();
                 String sql = new String("delete  from student where Stuname=?");
                 ps = ct.prepareStatement(sql);
                 ps.setString(1, this.getName().trim());

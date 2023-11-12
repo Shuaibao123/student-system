@@ -26,7 +26,7 @@ class UpdataJFrame extends JDialog implements ActionListener {
 
     public UpdataJFrame(Frame Father, boolean Model, String name) {
         // Adopting Mode Dialogs
-        super(Father, Model);
+//        super(Father, Model);
         for (int i = 0; i < 5; i++)
             jt[i] = new JTextField(10);
         // Set to read only
@@ -88,20 +88,24 @@ class UpdataJFrame extends JDialog implements ActionListener {
         jp1.add(jb[0], BorderLayout.EAST);
         jp1.add(jb[1], BorderLayout.WEST);
         mybox[2] = Box.createHorizontalBox();
+        mybox[2].add(Box.createHorizontalStrut(25));
         mybox[2].add(mybox[0]);
         mybox[2].add(Box.createHorizontalStrut(10));
         mybox[2].add(mybox[1]);
+        mybox[2].add(Box.createHorizontalStrut(25));
         Connect(name);
         this.add(mybox[2], BorderLayout.NORTH);
         this.add(jp1, BorderLayout.SOUTH);
         init();
+       this. setLocationRelativeTo(null);
+        this.setSize(400,280);
     }
 
     // Display section
     public void init() {
         this.setTitle("Modify student information");
         this.setBackground(Color.magenta);
-        this.setBounds(800, 600, 600, 600);
+        this.setBounds(800, 600, 400, 280);
         this.setVisible(true);
         // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -110,8 +114,8 @@ class UpdataJFrame extends JDialog implements ActionListener {
         ResultSet rs = null;
         // Drive loading
         try {
-            String driver = "jdbc:derby://localhost:1527/student;create=true;";
-            ct = DriverManager.getConnection(driver);
+            
+            ct = JDBCManager.getConn();
             String sql = new String("Select * from student where stuId=?");
             ps = ct.prepareStatement(sql);
             ps.setString(1, name);
@@ -174,10 +178,9 @@ class UpdataJFrame extends JDialog implements ActionListener {
             // Process the written data
             try {
                 // Drive loading
-                String driver = "jdbc:derby://localhost:1527/student;create=true;";
-                ct = DriverManager.getConnection(driver);
+                
+                ct = JDBCManager.getConn();
                 ps = ct.prepareStatement("Update student Set Stuname=?,StuSex=?,StuAge=?,StuJg=?,StuDept=? where StuId=?");
-                // Come back and modify
                 // NAME
                 ps.setString(1, jt[1].getText().toString().trim());
                 // SEX
@@ -215,7 +218,7 @@ class UpdataJFrame extends JDialog implements ActionListener {
                 }
             }
             this.dispose();
-        } else if (e.getSource() == jb[0])
+        } else if (e.getSource() == jb[1])
             // Release the window to exit the layout
             this.dispose();
         else if (jradio[0].isSelected()) {

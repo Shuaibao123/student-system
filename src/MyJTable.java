@@ -27,9 +27,9 @@ class MyJTable extends AbstractTableModel {
         String sql;
         try {
             // Load jdbc_ Odbc driver
-            String driver = "jdbc:derby://localhost:1527/student;create=true;";
+            
             try {
-                ct = DriverManager.getConnection(driver);
+                ct = JDBCManager.getConn();
             }catch(Exception e) {
                 e.printStackTrace();
             }

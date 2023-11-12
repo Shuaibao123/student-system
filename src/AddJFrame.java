@@ -27,7 +27,8 @@ class AddJFrame extends JDialog implements ActionListener {
     private JPanel backgroundPanel;
     public AddJFrame(Frame Father, boolean Model) {
         // Adopting Mode Dialogs
-        super(Father, Model);
+//        super(Father, Model);
+        setLocationRelativeTo(null);
         backgroundImage = new ImageIcon("image:\\aa.jpeg").getImage();
         backgroundPanel = new JPanel() {
             @Override
@@ -90,12 +91,15 @@ class AddJFrame extends JDialog implements ActionListener {
         jp1.add(jb[0], BorderLayout.EAST);
         jp1.add(jb[1], BorderLayout.WEST);
         mybox[2] = Box.createHorizontalBox();
+        mybox[2].add(Box.createHorizontalStrut(25));
         mybox[2].add(mybox[0]);
         mybox[2].add(Box.createHorizontalStrut(10));
         mybox[2].add(mybox[1]);
+        mybox[2].add(Box.createHorizontalStrut(25));
         this.add(mybox[2], BorderLayout.NORTH);
         this.add(jp1, BorderLayout.SOUTH);
         init();
+        setLocationRelativeTo(null);
     }
 
     // Display section
@@ -105,7 +109,8 @@ class AddJFrame extends JDialog implements ActionListener {
         setBounds(0, 0, bg.getIconWidth(), bg.getIconHeight());
         JLabel _label=new JLabel(bg);//Add background image to label
         _label.setBounds(0, 0, bg.getIconWidth(), bg.getIconHeight());
-        this.setBounds(800, 600, 600, 600);
+//        this.setBounds(800, 600, 600, 600);
+        setSize(400,280);
         this.setVisible(true);
     }
     private Image backgroundImage;
@@ -123,8 +128,8 @@ class AddJFrame extends JDialog implements ActionListener {
             // Process the written data
             try {
 
-                String driver = "jdbc:derby://localhost:1527/student;create=true;";
-                ct = DriverManager.getConnection(driver);
+                
+                ct = JDBCManager.getConn();
                 ps = ct.prepareStatement("insert into student values(?,?,?,?,?,?)");
                 for (int i = 1, j = 0; i <= 6; i++) {
                     if (3 == i) {
@@ -164,7 +169,7 @@ class AddJFrame extends JDialog implements ActionListener {
                 }
             }
             this.dispose();
-        } else if (e.getSource() == jb[0])
+        } else if (e.getSource() == jb[1])
             // Release the window to exit the layout
             this.dispose();
         else if (jradio[0].isSelected()) {

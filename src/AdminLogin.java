@@ -18,9 +18,9 @@ public class AdminLogin extends JFrame {
     // Label labels store background images
     private JLabel label;
     // Set button components
-    private JButton login = new JButton("LOG ON");
+    private JButton login = new JButton("LOG IN");
     private JButton cancel = new JButton("CANCEL");
-    private JLabel jlb1 = new JLabel("USERNAME:"), jlb2 = new JLabel("CODE:"), jlbtitle = new JLabel("Login interface");
+    private JLabel jlb1 = new JLabel("USERNAME:"), jlb2 = new JLabel("DODE:"), jlbtitle = new JLabel("Login interface");
     // Set Text Box Component
     private JTextField admin = new JTextField();
     JPasswordField password = new JPasswordField();
@@ -33,10 +33,8 @@ public class AdminLogin extends JFrame {
     private void init() {
         this.setTitle("Administrator login interface");
         this.setSize(500, 350);
-        ImageIcon image1 = new ImageIcon("image\\aa.jpeg"); // Interface background image
-        JLabel backLabel = new JLabel();
-        backLabel.setIcon(image1);
-        label = new JLabel(image1);
+        this.setIconImage(Main.WINDOWS_ICON);
+        label = new JLabel(new ImageIcon("image\\aa.jpeg"));
         label.setBounds(0, 0, 1000, 400);
         // Add two labels with images on the bottom layer of Layered Panel, and label 2 is above label
         this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
@@ -58,14 +56,19 @@ public class AdminLogin extends JFrame {
         /*
          * Absolute position of components
          */
-        jlb1.setBounds(50, 130, 90, 25);
+        jlb1.setBounds(50, 130, 80, 25);
         jlb1.setForeground(Color.black);
-        admin.setBounds(95, 130, 300, 25);
-        password.setBounds(95, 154, 300, 25);
-        jlb2.setBounds(50, 154, 90, 25);
+        jlb1.setFont(Main.DEFAULT_FOUNT_18);
+        jlb1.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        admin.setBounds(130, 130, 300, 25);
+        password.setBounds(130, 164, 300, 25);
+        jlb2.setBounds(50, 164, 80, 25);
         jlb2.setForeground(Color.black);
-        login.setBounds(115, 225, 90, 20);
-        cancel.setBounds(215, 225, 90, 20);
+        jlb2.setFont(Main.DEFAULT_FOUNT_18);
+        jlb2.setHorizontalAlignment(SwingConstants.RIGHT);
+        login.setBounds(150, 225, 90, 20);
+        cancel.setBounds(250, 225, 90, 20);
         jlbtitle.setBounds(180, 45, 200, 50);
         Font f = new Font("微软雅黑", Font.BOLD, 30);
         jlbtitle.setFont(f);
@@ -84,6 +87,8 @@ public class AdminLogin extends JFrame {
          */
         textSet(admin);
         textSet(password);
+
+        setLocationRelativeTo(null);
     }
 
     /*
